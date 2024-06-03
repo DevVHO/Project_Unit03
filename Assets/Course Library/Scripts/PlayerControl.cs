@@ -2,12 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour
+public class PlayerControl : MonoBehaviour
 {
     private Rigidbody bodyCOW;
     public float jump = 10;
     public float GravityModifier = 2f;
     public bool isOnGround = true;
+    public bool Gameover = false ;
     // Start is called before the first frame update
     void Start()
     {
@@ -26,9 +27,19 @@ public class PlayerController : MonoBehaviour
         }       
     }
 
-    private void OnTriggerEnter(Collider collider)
+    private void OnCollisionEnter(Collision collision)
     {
-        isOnGround = true;
+        if(collision.gameObject.CompareTag("Ground"))
+        {
+            isOnGround = true;
+        }
+        else if (collision.gameObject.CompareTag("Obstacle"))
+        {
+            Debug.Log("Gameover :(");
+            Gameover = true;
+        }
+
+
         
     }
 }
